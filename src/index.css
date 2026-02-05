@@ -239,3 +239,11 @@ body::after {
     transparent 16px
   );
 }
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
