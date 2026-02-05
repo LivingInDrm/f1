@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navItems = [
   { label: 'BASICS', href: '#f1-basics', num: '01' },
   { label: 'CIRCUIT', href: '#circuit', num: '02' },
-  { label: 'SCHEDULE', href: '#schedule', num: '03' },
+  { label: 'TEAMS', href: '#teams-drivers', num: '03' },
+  { label: 'SCHEDULE', href: '#schedule', num: '04' },
 ]
 
 export function Navbar() {
