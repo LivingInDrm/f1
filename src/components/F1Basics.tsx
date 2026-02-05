@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useInView, useSpring, useTransform } from 'framer-motion'
 import { Zap, Gauge, Activity, Flame } from 'lucide-react'
 
 const stats = [
@@ -37,33 +37,19 @@ const stats = [
   },
 ]
 
-function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
-  const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true })
-  const [displayValue, setDisplayValue] = useState(0)
+function AnimatedNumber({ value, suffix, isInView }: { value: number; suffix: string; isInView: boolean }) {
+  const spring = useSpring(0, { stiffness: 50, damping: 20 })
+  const display = useTransform(spring, (v) => 
+    value >= 100 ? Math.round(v) : Math.round(v * 10) / 10
+  )
 
-  useEffect(() => {
-    if (isInView) {
-      const duration = 1500
-      const steps = 60
-      const increment = value / steps
-      let current = 0
-      const timer = setInterval(() => {
-        current += increment
-        if (current >= value) {
-          setDisplayValue(value)
-          clearInterval(timer)
-        } else {
-          setDisplayValue(Math.floor(current * 10) / 10)
-        }
-      }, duration / steps)
-      return () => clearInterval(timer)
-    }
-  }, [isInView, value])
+  if (isInView) {
+    spring.set(value)
+  }
 
   return (
-    <span ref={ref} className="font-mono text-5xl md:text-6xl font-bold tabular-nums">
-      {displayValue}
+    <span className="font-mono text-5xl md:text-6xl font-bold tabular-nums">
+      <motion.span>{display}</motion.span>
       <span className="text-2xl md:text-3xl ml-1 text-chrome/50">{suffix}</span>
     </span>
   )
@@ -165,7 +151,7 @@ export function F1Basics() {
                   </div>
                   
                   <div className="mb-4">
-                    <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+                    <AnimatedNumber value={stat.value} suffix={stat.suffix} isInView={isInView} />
                   </div>
                   
                   <h3 className="font-display text-xl tracking-wider mb-2" style={{ color: stat.accent }}>

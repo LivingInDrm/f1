@@ -247,3 +247,39 @@ body::after {
 .backface-hidden {
   backface-visibility: hidden;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  body::before,
+  body::after {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body::before {
+    animation: grain 2s steps(5) infinite;
+  }
+  
+  body::after {
+    animation: scanline 16s linear infinite;
+  }
+  
+  .glow-red {
+    animation: none;
+    box-shadow: 0 0 20px rgba(225, 6, 0, 0.3);
+  }
+  
+  .border-gradient {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}

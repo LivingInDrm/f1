@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 
 export function Hero() {
   const [timeLeft, setTimeLeft] = useState({
@@ -9,12 +9,13 @@ export function Hero() {
     seconds: 0
   })
 
+  const prefersReducedMotion = useReducedMotion()
   const containerRef = useRef(null)
   const { scrollY } = useScroll()
-  const y1 = useTransform(scrollY, [0, 500], [0, 200])
-  const y2 = useTransform(scrollY, [0, 500], [0, -150])
+  const y1 = useTransform(scrollY, [0, 500], [0, prefersReducedMotion ? 0 : 200])
+  const y2 = useTransform(scrollY, [0, 500], [0, prefersReducedMotion ? 0 : -150])
   const opacity = useTransform(scrollY, [0, 400], [1, 0])
-  const scale = useTransform(scrollY, [0, 400], [1, 0.9])
+  const scale = useTransform(scrollY, [0, 400], [1, prefersReducedMotion ? 1 : 0.9])
 
   useEffect(() => {
     const raceDate = new Date('2026-04-19T14:00:00+08:00')
@@ -44,47 +45,50 @@ export function Hero() {
     <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-racing-black">
       <div className="absolute inset-0 carbon-pattern opacity-30" />
       
-      <motion.div 
-        style={{ y: y1 }}
-        className="absolute inset-0 overflow-hidden pointer-events-none"
-      >
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute h-[1px] w-[200%]"
-            style={{
-              top: `${10 + i * 12}%`,
-              left: '-50%',
-              background: `linear-gradient(90deg, transparent, ${i % 2 === 0 ? '#e10600' : '#00fff0'} 50%, transparent)`,
-              opacity: 0.4,
-              transform: 'skewY(-5deg)',
-            }}
-            animate={{
-              x: ['-100%', '100%'],
-            }}
-            transition={{
-              duration: 1.5 + i * 0.3,
-              repeat: Infinity,
-              ease: 'linear',
-              delay: i * 0.2,
-            }}
-          />
-        ))}
-      </motion.div>
+      {!prefersReducedMotion && (
+        <motion.div 
+          style={{ y: y1, willChange: 'transform' }}
+          className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block"
+        >
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-[1px] w-[200%]"
+              style={{
+                top: `${15 + i * 20}%`,
+                left: '-50%',
+                background: `linear-gradient(90deg, transparent, ${i % 2 === 0 ? '#e10600' : '#00fff0'} 50%, transparent)`,
+                opacity: 0.4,
+                transform: 'skewY(-5deg)',
+                willChange: 'transform',
+              }}
+              animate={{
+                x: ['-100%', '100%'],
+              }}
+              transition={{
+                duration: 3 + i * 0.5,
+                repeat: Infinity,
+                ease: 'linear',
+                delay: i * 0.3,
+              }}
+            />
+          ))}
+        </motion.div>
+      )}
 
       <motion.div
-        style={{ y: y2 }}
-        className="absolute top-0 right-0 w-[600px] h-[600px] pointer-events-none"
+        style={{ y: y2, willChange: 'transform' }}
+        className="absolute top-0 right-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] pointer-events-none"
       >
-        <div className="absolute inset-0 bg-f1-red/20 blur-[150px] rounded-full" />
-        <div className="absolute top-20 left-20 w-40 h-40 border border-f1-red/20 rotate-45" />
+        <div className="absolute inset-0 bg-f1-red/20 blur-[80px] md:blur-[150px] rounded-full" />
+        <div className="absolute top-20 left-20 w-40 h-40 border border-f1-red/20 rotate-45 hidden md:block" />
       </motion.div>
       
       <motion.div
-        style={{ y: y1 }}
-        className="absolute bottom-0 left-0 w-[400px] h-[400px] pointer-events-none"
+        style={{ y: y1, willChange: 'transform' }}
+        className="absolute bottom-0 left-0 w-[300px] h-[300px] md:w-[400px] md:h-[400px] pointer-events-none"
       >
-        <div className="absolute inset-0 bg-neon-cyan/10 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 bg-neon-cyan/10 blur-[60px] md:blur-[120px] rounded-full" />
       </motion.div>
 
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-f1-red to-transparent opacity-50" />
