@@ -23,14 +23,14 @@ export function ShanghaiCircuit() {
   const activeCornerData = activeCorner ? corners.find(c => c.id === activeCorner) : null
 
   return (
-    <section id="circuit" className="py-32 md:py-40 relative overflow-hidden bg-racing-dark">
+    <section id="circuit" className="pt-32 pb-32 md:pt-48 md:pb-40 relative overflow-hidden bg-racing-dark">
       <div className="absolute inset-0 carbon-pattern opacity-20" />
       
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon-cyan/30 to-transparent" />
       
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-neon-cyan/5 blur-[150px] rounded-full" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}

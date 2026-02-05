@@ -74,7 +74,7 @@ export function F1Basics() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="f1-basics" className="py-32 md:py-40 relative overflow-hidden bg-racing-black">
+    <section id="f1-basics" className="pt-32 pb-32 md:pt-48 md:pb-40 relative overflow-hidden bg-racing-black">
       <div className="absolute inset-0 diagonal-stripe" />
       
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-f1-red/30 to-transparent" />
@@ -83,7 +83,7 @@ export function F1Basics() {
       <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-f1-red/5 blur-[150px]" />
       <div className="absolute bottom-1/3 -left-32 w-[400px] h-[400px] rounded-full bg-neon-cyan/5 blur-[120px]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
