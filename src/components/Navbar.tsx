@@ -39,7 +39,7 @@ export function Navbar() {
         }`}
       >
         <div className={`transition-all duration-500 ${isScrolled ? 'border-b border-white/5' : ''}`}>
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
             <div className="flex items-center justify-between h-16 md:h-20">
               <motion.a
                 href="#"

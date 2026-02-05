@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export function Footer() {
   return (
-    <footer className="relative py-24 overflow-hidden bg-racing-dark">
+    <footer className="relative pt-32 pb-24 overflow-hidden bg-racing-dark">
       <div className="absolute inset-0 carbon-pattern opacity-10" />
       
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-f1-red/30 to-transparent" />
@@ -20,7 +20,7 @@ export function Footer() {
         </svg>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end mb-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
